@@ -1,0 +1,72 @@
+.todo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+  font-family: Arial, sans-serif;
+}
+
+.todo-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.todo-form input {
+  padding: 8px;
+  font-size: 14px;
+}
+
+.todo-form button {
+  padding: 8px 16px;
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.todo-list {
+  list-style: none;
+  padding: 0;
+  width: 400px;
+}
+
+.todo-list li {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.todo-list input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.complete {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.csv-upload {
+  margin: 20px 0;
+  text-align: center;
+}
+.csv-upload input {
+  margin-right: 10px;
+}
+
+.todo-count-box {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.count-square {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  background-color: #f0f0f0;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 80px;
+  border-radius: 8px;
+  border: 2px solid #ccc;
+}
