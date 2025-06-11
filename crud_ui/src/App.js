@@ -34,7 +34,7 @@
 // export default App;
 
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route,Navigate  } from "react-router-dom";
 
 import Home from "./pages/home/home";
 import Login from "./pages/login/login";
@@ -45,20 +45,31 @@ import Nav from "./components/nav/Nav";
 import UserUi from "./components/UserUi"
 import TodoApp from "./pages/Todo/TodoApp";
 import NoteApp from "./pages/Note/NoteApp";
+import Logout from "./pages/login/logout";
 
 function App() {
+    const token = localStorage.getItem("token");
+
   return (
     <Routes>
-      <Route path="/" element={<Nav />} />
-      <Route path="/home" element={<Home />} />
+      {/* <Route path="/" element={<Nav />} /> */}
+      <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/products" element={<UserUi />} />
-      <Route path="/todoApp" element={<TodoApp />} />
+      {/* <Route path="/todoApp" element={<TodoApp />} /> */}
+      <Route
+          path="/todos"
+          element={token ? <TodoApp /> : <Navigate to="/login" />}
+        />
+      <Route path="*" element={<Navigate to={token ? "/todos" : "/login"} />} />
+
       <Route path="/noteApp" element={<NoteApp />} />
 
 
       <Route path="*" element={<PageNotFound />} />
+      <Route path="/logout" element={<Logout />} />
+
     </Routes>
   );
 }

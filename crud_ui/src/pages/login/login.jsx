@@ -1,63 +1,14 @@
-// import { useState } from "react";
-// import loginActionCreator from "./ActionCreator";
-// import { useDispatch } from "react-redux";
-
-// function Signin() {
-//   const dispatch = useDispatch();
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-
-//   const login = () => {
-//     dispatch(loginActionCreator(email, password));
-//   };
-
-//   return (
-//     <div className="my-5 mx-auto text-center shadow p-5" style={{ maxWidth: "500px" }}>
-//       <h3>Sign In</h3>
-//       <div className="my-4">
-//         <input
-//           type="text"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//           placeholder="Enter Email"
-//           className="form-control"
-//         />
-//       </div>
-
-//       <div className="my-4">
-//         <input
-//           type="password"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//           className="form-control"
-//           placeholder="Enter Password"
-//         />
-//       </div>
-
-//       <div>
-//         <button className="btn btn-dark px-5" onClick={login}>
-//           Sign In
-//         </button>
-//       </div>
-
-//       <div className="mt-4">
-//         <a href="/signup">Create an Account</a>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Signin;
-
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ import this
+import { useNavigate } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
- const navigate = useNavigate();
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -65,12 +16,11 @@ const Login = () => {
 
     try {
       const response = await fetch(`https://localhost:7245/api/User/login?email=${email}&password=${password}`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) {
         const errorMsg = await response.text();
@@ -80,11 +30,9 @@ const Login = () => {
       }
 
       const data = await response.json();
-      // Save JWT token to localStorage (or wherever you want)
       localStorage.setItem("token", data.token || data.Token);
       alert("Login successful!");
-       navigate("/");
-      // Redirect or update UI accordingly
+      navigate("/");
     } catch (err) {
       setError("An error occurred. Please try again.");
     }
@@ -92,30 +40,43 @@ const Login = () => {
   };
 
   return (
-    <div style={{ maxWidth: 300, margin: "auto", padding: 20 }}>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={{ width: "100%", marginBottom: 10, padding: 8 }}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={{ width: "100%", marginBottom: 10, padding: 8 }}
-        />
-        <button type="submit" disabled={loading} style={{ width: "100%", padding: 10 }}>
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
-      {error && <p style={{ color: "red", marginTop: 10 }}>{error}</p>}
+    <div className="container d-flex align-items-center justify-content-center min-vh-100">
+      <div className="card p-4 shadow" style={{ maxWidth: 400, width: "100%" }}>
+        <h3 className="text-center mb-4">🔐 Login</h3>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">Email address</label>
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">Password</label>
+            <input
+              type="password"
+              className="form-control"
+              id="password"
+              placeholder="Enter password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          {error && <div className="alert alert-danger">{error}</div>}
+
+          <button type="submit" className="btn btn-primary w-100" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
